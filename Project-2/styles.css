@@ -1,0 +1,34 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#canvas1 {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    background: black;
+}
+
+#header {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 5rem;
+    white-space: nowrap;
+    color: whitesmoke;
+    border-top: 6px solid white;
+}
+
+#header::before {
+    content: 'I am George Kurian Thomas';
+    position: absolute;
+    bottom: -3rem;
+    font-size: 2rem;
+    text-align: center;
+    left: -40%;
+}
