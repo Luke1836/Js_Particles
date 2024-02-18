@@ -4,6 +4,30 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 const particlesArray = [];
 
+window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    titleBound = title.getBoundingClientRect();
+    collision = {
+        x: titleBound.left,
+        y: titleBound.top,
+        width: titleBound.width,
+        height: 10,
+    };
+    particlesArray = [];
+    init();
+});
+
+//Bouncing
+const title = document.getElementById('header');
+let titleBound = title.getBoundingClientRect();
+let collision = {
+    x: titleBound.left,
+    y: titleBound.top,
+    width: titleBound.width,
+    height: 10,
+};
+
 class Particles 
 {
     constructor(x, y)
@@ -12,7 +36,7 @@ class Particles
         this.y = y;
         this.size = Math.random() * 15 + 1;
         this.weight = Math.random() * 1 + 1;
-        this.directionX = -5;
+        this.directionX = -3;
     }
 
     update() 
@@ -26,6 +50,14 @@ class Particles
         this.weight += 0.02;
         this.y += this.weight;
         this.x += this.directionX;
+
+        //Checking for collision of the particles
+        if(this.x < collision.x + collision.width && this.y < collision.y + collision.height && 
+            this.x + this.size > collision.x && this.y + this.size > collision.y)
+        {
+            this.y -= 3;
+            this.weight *= -0.6;              //Makes the particles bounce
+        }
     }
 
     draw() 
@@ -40,7 +72,7 @@ class Particles
 
 function init() 
 {
-    for(let i = 0 ; i < 100 ; i++)
+    for(let i = 0 ; i < 150 ; i++)
     {
         const x = Math.random() * canvas.width;
         particlesArray.push(new Particles(x, 0));
