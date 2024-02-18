@@ -10,9 +10,9 @@ class Particles
     {
         this.x = x;
         this.y = y;
-        this.size = 10;
-        this.weight = 3;
-        this.directionX = -10;
+        this.size = Math.random() * 15 + 1;
+        this.weight = Math.random() * 1 + 1;
+        this.directionX = -5;
     }
 
     update() 
@@ -20,10 +20,10 @@ class Particles
         if(this.y > canvas.height)
         {
             this.y = 0;
-            this.weight = 2;
-            this.x = Math.random() * canvas.width;
+            this.weight = Math.random() * 1 + 1;
+            this.x = Math.random() * canvas.width * 1.5;
         }
-        this.weight += 0.10;
+        this.weight += 0.02;
         this.y += this.weight;
         this.x += this.directionX;
     }
@@ -38,15 +38,25 @@ class Particles
     }
 }
 
-const particle1 = new Particles(100,0);
+function init() 
+{
+    for(let i = 0 ; i < 100 ; i++)
+    {
+        const x = Math.random() * canvas.width;
+        particlesArray.push(new Particles(x, 0));
+    }
+}
+init();
 
 function animate() 
 {
     ctx.fillStyle = 'rgba(0, 0, 0, 0.05';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    particle1.update();
-    particle1.draw();
-    ctx.fill();
+    for(let i = 0 ; i < particlesArray.length ; i++)
+    {
+        particlesArray[i].update();
+        particlesArray[i].draw();
+    }
     requestAnimationFrame(animate);
 }
 animate();
