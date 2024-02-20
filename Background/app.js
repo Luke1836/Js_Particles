@@ -19,19 +19,19 @@ window.addEventListener('resize', () => {
     gradient.addColorStop(0.5, 'cyan');
     gradient.addColorStop(1, 'violet');
     ctx.fillStyle = gradient;
-    
+
 */
 class Particles 
 {
     constructor(effect)
     {
         this.effect = effect;
-        this.radius = 15;
+        this.radius = Math.random() * 20 + 1;
         //To make sure that all the particles are clearly visible
         this.x = this.radius + Math.random() * (this.effect.width - this.radius * 2);   
         this.y = this.radius + Math.random() * (this.effect.height - this.radius * 2);
-        this.vx = Math.random() * 5 - 2;
-        this.vy = Math.random() * 5 - 2;
+        this.vx = Math.random() * 3 - 2;
+        this.vy = Math.random() * 3 - 2;
     }
 
     draw(context)
@@ -62,7 +62,7 @@ class Effects
         this.width = this.canvas.width;
         this.height = this.canvas.height;
         this.particles = [];
-        this.numberOfParticles = 120;
+        this.numberOfParticles = 150;
         this.createParticles();
     }
 
