@@ -20,6 +20,8 @@ class Particles
         //To make sure that all the particles are clearly visible
         this.x = this.radius + Math.random() * (this.effect.width - this.radius * 2);   
         this.y = this.radius + Math.random() * (this.effect.height - this.radius * 2);
+        this.vx = Math.random() * 5 - 2;
+        this.vy = Math.random() * 5 - 2;
     }
 
     draw(context)
@@ -29,6 +31,16 @@ class Particles
         context.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
         context.fill();
         context.stroke();
+    }
+
+    update()
+    {
+        this.x += this.vx;
+        if(this.x > this.effect.width + this.radius || this.x < this.radius)
+            this.vx *= -1;
+        this.y += this.vy;
+        if(this.y > this.effect.height + this.radius || this.y < this.radius)
+            this.vy *= -1;
     }
 }
 
@@ -54,9 +66,17 @@ class Effects
     {
         this.particles.forEach(particle => {
             particle.draw(context);
+            particle.update();
         });
     }
 }
 
 const effects = new Effects(canvas);
-effects.handleParticles(ctx);
+
+function animate()
+{
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    effects.handleParticles(ctx);
+    requestAnimationFrame(animate);
+}
+animate();
