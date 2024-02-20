@@ -29,6 +29,19 @@ class Particles
 
     update()
     {
+        if(this.effect.mouse.pressed)
+        {
+            const dx = this.x - this.effect.mouse.x;
+            const dy = this.y - this.effect.mouse.y;
+            const dist = Math.hypot(dy, dx);
+            if(dist < this.effect.mouse.radius)
+            {
+                const angle = Math.atan2(dy, dx);
+                this.x += Math.cos(angle);
+                this.y += Math.sin(angle);
+            }
+
+        }
         this.x += this.vx;
         if(this.x > this.effect.width + this.radius || this.x < this.radius)
             this.vx *= -1;
@@ -57,10 +70,36 @@ class Effects
         this.numberOfParticles = 300;
         this.createParticles();
 
+        this.mouse = {
+            x: 0,
+            y: 0,
+            pressed: false,
+            radius: 250,
+        };
+
         //When the window is resized, we call the reize method of the Effects class
         window.addEventListener('resize', e => {
             this.resize(e.target.window.innerWidth, e.target.window.innerHeight, context);
-        })
+        });
+
+        window.addEventListener('mousemove', e => {
+            if(this.mouse.pressed)  
+            {
+                this.mouse.x = e.x;
+                this.mouse.y = e.y;
+            }
+        });
+
+        window.addEventListener('mousedown', e => {
+            this.mouse.pressed = true;
+            this.mouse.x = e.x;
+            this.mouse.y = e.y;
+        });
+
+        window.addEventListener('mouseup', e => {
+            this.mouse.pressed = false;
+        });
+
     }
 
     createParticles()
