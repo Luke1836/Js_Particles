@@ -36,18 +36,31 @@ class Particles
         if(this.y > this.effect.height + this.radius || this.y < this.radius)
             this.vy *= -1;
     }
+
+    //Resets the positions of the every particles when window resizing takes place
+    reset() 
+    {
+        this.x = this.radius + Math.random() * (this.effect.width - this.radius * 2);   
+        this.y = this.radius + Math.random() * (this.effect.height - this.radius * 2);
+    }
 }
 
 class Effects 
 {
-    constructor(canvas)
+    constructor(canvas, context)
     {
+        this.context = context;
         this.canvas = canvas;
         this.width = this.canvas.width;
         this.height = this.canvas.height;
         this.particles = [];
         this.numberOfParticles = 300;
         this.createParticles();
+
+        //When the window is resized, we call the reize method of the Effects class
+        window.addEventListener('resize', e => {
+            this.resize(e.target.window.innerWidth, e.target.window.innerHeight, context);
+        })
     }
 
     createParticles()
@@ -87,9 +100,28 @@ class Effects
 
         }
     }
+
+    /*
+        Resizes the window canvas, initializes the particle color and the stroke color as well; it rests the positions of each and every particle according to the new dimensions of the canvas.
+    */
+
+    resize(width, height, context)
+    {
+        this.canvas.width = width;
+        this.canvas.height = height;
+        this.width = width;
+        this.height = height;
+        context.fillStyle = 'cyan'; 
+        context.strokeStyle = 'white';
+        context.lineWidth = 3;
+        this.particles.forEach(particle => {
+            particle.reset();
+        })
+    }
 }
 
-const effects = new Effects(canvas);
+//We create the object of the Effects class
+const effects = new Effects(canvas, ctx);
 
 function animate()
 {
