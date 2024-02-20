@@ -3,7 +3,7 @@ const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 ctx.strokeStyle = 'white';
-ctx.lineWidth = 2;
+ctx.lineWidth = 3;
 
 class Particles 
 {
