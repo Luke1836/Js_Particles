@@ -40,7 +40,6 @@ class Particles
                 this.x += Math.cos(angle) * dist / 10;
                 this.y += Math.sin(angle) * dist / 10;
             }
-
         }
 
         if(this.x < this.radius)
@@ -155,7 +154,7 @@ class Effects
                 const dist = Math.hypot(dx, dy);
                 if(dist < maxDistance)
                 {
-                    const opacity = 1 - (dist/maxDistance);     //When the particles are close the lines become transparent and when they are farther the opacity decreases and they become even more clearer
+                    const opacity = 1 - (dist / maxDistance);     //When the particles are close the lines become transparent and when they are farther the opacity decreases and they become even more clearer
                     context.globalAlpha = opacity;
                     context.beginPath();
                     context.moveTo(this.particles[i].x, this.particles[i].y);
@@ -163,7 +162,6 @@ class Effects
                     context.stroke();
                 }
             }
-
         }
     }
 
