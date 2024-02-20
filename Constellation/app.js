@@ -10,12 +10,15 @@ class Particles
     constructor(effect)
     {
         this.effect = effect;
-        this.radius = Math.random() * 20 + 1;
+        this.radius = Math.floor(Math.random() * 15 + 1);
         //To make sure that all the particles are clearly visible
         this.x = this.radius + Math.random() * (this.effect.width - this.radius * 2);   
         this.y = this.radius + Math.random() * (this.effect.height - this.radius * 2);
         this.vx = Math.random() * 3 - 2;
         this.vy = Math.random() * 3 - 2;
+        this.pushX = 0;
+        this.pushY = 0;
+        this.friction = 0.95;
     }
 
     draw(context)
@@ -37,10 +40,13 @@ class Particles
             if(dist < this.effect.mouse.radius)
             {
                 const angle = Math.atan2(dy, dx);
-                this.x += Math.cos(angle) * dist / 10;
-                this.y += Math.sin(angle) * dist / 10;
+                this.pushX += Math.cos(angle) * dist / 25;
+                this.pushY += Math.sin(angle) * dist / 25;
             }
         }
+
+        this.x += (this.pushX *= this.friction) + this.vx;
+        this.y += (this.pushY *= this.friction) + this.vy;
 
         if(this.x < this.radius)
         {
@@ -63,17 +69,6 @@ class Particles
             this.y = this.effect.height - this.radius;
             this.vy *= -1;
         }
-
-        /*
-        this.x += this.vx;
-        if(this.x > this.effect.width + this.radius || this.x < this.radius)
-            this.vx *= -1;
-        this.y += this.vy;
-        if(this.y > this.effect.height + this.radius || this.y < this.radius)
-            this.vy *= -1;
-        */
-        this.x += this.vx;
-        this.y += this.vy;
     }
 
     //Resets the positions of the every particles when window resizing takes place
@@ -100,7 +95,7 @@ class Effects
             x: 0,
             y: 0,
             pressed: false,
-            radius: 150,
+            radius: 250,
         };
 
         //When the window is resized, we call the reize method of the Effects class
