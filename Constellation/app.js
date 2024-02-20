@@ -37,17 +37,44 @@ class Particles
             if(dist < this.effect.mouse.radius)
             {
                 const angle = Math.atan2(dy, dx);
-                this.x += Math.cos(angle);
-                this.y += Math.sin(angle);
+                this.x += Math.cos(angle) * dist / 10;
+                this.y += Math.sin(angle) * dist / 10;
             }
 
         }
+
+        if(this.x < this.radius)
+        {
+            this.x = this.radius;
+            this.vx *= -1;
+        }
+        else if(this.x > this.effect.width - this.radius)
+        {
+            this.x = this.effect.width - this.radius;
+            this.vx *= -1;
+        }
+
+        if(this.y < this.radius)
+        {
+            this.y = this.radius;
+            this.vy *= -1;
+        }
+        else if(this.y > this.effect.height - this.radius)
+        {
+            this.y = this.effect.height - this.radius;
+            this.vy *= -1;
+        }
+
+        /*
         this.x += this.vx;
         if(this.x > this.effect.width + this.radius || this.x < this.radius)
             this.vx *= -1;
         this.y += this.vy;
         if(this.y > this.effect.height + this.radius || this.y < this.radius)
             this.vy *= -1;
+        */
+        this.x += this.vx;
+        this.y += this.vy;
     }
 
     //Resets the positions of the every particles when window resizing takes place
@@ -74,7 +101,7 @@ class Effects
             x: 0,
             y: 0,
             pressed: false,
-            radius: 250,
+            radius: 150,
         };
 
         //When the window is resized, we call the reize method of the Effects class
