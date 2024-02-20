@@ -11,6 +11,16 @@ window.addEventListener('resize', () => {
     canvas.height = window.innerHeight;
 });
 
+/*
+                    ------------Adding Linear Gradients--------------
+
+    const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+    gradient.addColorStop(0, 'green');
+    gradient.addColorStop(0.5, 'cyan');
+    gradient.addColorStop(1, 'violet');
+    ctx.fillStyle = gradient;
+    
+*/
 class Particles 
 {
     constructor(effect)
