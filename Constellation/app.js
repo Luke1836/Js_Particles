@@ -2,25 +2,9 @@ const canvas = document.getElementById('canvas1');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
-ctx.strokeStyle = 'grey';
-ctx.lineWidth = 2
+ctx.strokeStyle = 'white';
+ctx.lineWidth = 2;
 
-//Resizing the canvas, making sure that the canvas width remains the same upon resizing
-window.addEventListener('resize', () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-});
-
-/*
-                    ------------Adding Linear Gradients--------------
-
-    const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-    gradient.addColorStop(0, 'green');
-    gradient.addColorStop(0.5, 'cyan');
-    gradient.addColorStop(1, 'violet');
-    ctx.fillStyle = gradient;
-
-*/
 class Particles 
 {
     constructor(effect)
@@ -62,7 +46,7 @@ class Effects
         this.width = this.canvas.width;
         this.height = this.canvas.height;
         this.particles = [];
-        this.numberOfParticles = 150;
+        this.numberOfParticles = 250;
         this.createParticles();
     }
 
@@ -74,10 +58,32 @@ class Effects
 
     handleParticles(context)
     {
+        this.connectParticles(context);
         this.particles.forEach(particle => {
             particle.draw(context);
             particle.update();
         });
+    }
+
+    connectParticles(context)
+    {
+        const maxDistance = 100;
+        for(let i = 0 ; i < this.particles.length ; i++)
+        {   for(let j = i ; j < this.particles.length ; j++)
+            {
+                const dx = this.particles[i].x - this.particles[j].x;
+                const dy = this.particles[i].y - this.particles[j].y;
+                const dist = Math.hypot(dx, dy);
+                if(dist < maxDistance)
+                {
+                    context.beginPath();
+                    context.moveTo(this.particles[i].x, this.particles[i].y);
+                    context.lineTo(this.particles[j].x, this.particles[j].y);
+                    context.stroke();
+                }
+            }
+
+        }
     }
 }
 
