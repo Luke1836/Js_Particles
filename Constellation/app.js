@@ -46,7 +46,7 @@ class Effects
         this.width = this.canvas.width;
         this.height = this.canvas.height;
         this.particles = [];
-        this.numberOfParticles = 250;
+        this.numberOfParticles = 300;
         this.createParticles();
     }
 
@@ -76,6 +76,8 @@ class Effects
                 const dist = Math.hypot(dx, dy);
                 if(dist < maxDistance)
                 {
+                    const opacity = 1 - (dist/maxDistance);     //When the particles are close the lines become transparent and when they are farther the opacity decreases and they become even more clearer
+                    context.globalAlpha = opacity;
                     context.beginPath();
                     context.moveTo(this.particles[i].x, this.particles[i].y);
                     context.lineTo(this.particles[j].x, this.particles[j].y);
