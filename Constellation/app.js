@@ -45,9 +45,11 @@ class Particles
             }
         }
 
+        //The pushX and pushY gives an additional force which allows the particle to move about upon clicking
         this.x += (this.pushX *= this.friction) + this.vx;
         this.y += (this.pushY *= this.friction) + this.vy;
 
+        //This code snippet doesn't allow the particle to move out of the page
         if(this.x < this.radius)
         {
             this.x = this.radius;
