@@ -8,9 +8,9 @@ ctx.lineWidth = 2;
 /*  ------------Adding Linear Gradients--------------  */
 
 const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-gradient.addColorStop(0, '#74E991');
+gradient.addColorStop(0, '#BFD8AF');
 gradient.addColorStop(0.5, 'cyan');
-gradient.addColorStop(1, '#720455');
+gradient.addColorStop(1, '#910A67');
 
 class Particles
 {
@@ -24,7 +24,8 @@ class Particles
         this.vy = Math.random() * 3 - 2;
         this.pushX = 0;
         this.pushY = 0;
-        this.friction = 0;
+        this.friction = 0.90;
+        this.frictionY = 0.5;
     }
 
     draw(context)
@@ -47,36 +48,36 @@ class Particles
             if(dist < this.effect.mouse.radius)
             {
                 const angle = Math.atan2(dy, dx);
-                this.pushX += Math.cos(angle) + dist * 25;
-                this.pushY += Math.sin(angle) + dist * 25;
+                this.pushX += Math.cos(angle) * dist / 25;
+                this.pushY += Math.sin(angle) * dist / 25;
             }
+        }
+        
+        this.x += (this.pushX *= this.friction) + this.vx;
+        this.y += (this.pushY *= this.frictionY) + this.vy;
 
-            this.x += (this.pushX *= this.friction) + this.vx;
-            this.y += (this.pushY *= this.friction) + this.vy;
+        if(this.x < this.radius)
+        {
+            this.x = this.radius;
+            this.vx *= -1;
+        }
 
-            if(this.x < this.radius)
-            {
-                this.x = this.radius;
-                this.vx *= -1;
-            }
+        else if(this.x > this.effect.width - this.radius)
+        {
+            this.x = this.effect.width - this.radius;
+            this.vx *= -1;
+        }
 
-            else if(this.x > this.effect.width - this.radius)
-            {
-                this.x = this.effect.width - this.radius;
-                this.vx *= -1;
-            }
+        if(this.y < this.radius)
+        {
+            this.y = this.radius;
+            this.vy *= -1;
+        }
 
-            if(this.y < this.radius)
-            {
-                this.y = this.radius;
-                this.vy *= -1;
-            }
-
-            else if(this.y > this.effect.height - this.radius)
-            {
-                this.y = this.effect.height - this.radius;
-                this.vy += -1;
-            }
+        else if(this.y > this.effect.height - this.radius)
+        {
+            this.y = this.effect.height - this.radius;
+            this.vy += -1;
         }
     }
 
@@ -87,11 +88,11 @@ class Particles
     }
 }
 
-
 class Effect
 {
     constructor(canvas, context)
     {
+        this.context = context
         this.canvas = canvas;
         this.width = this.canvas.width;
         this.height = this.canvas.height;
@@ -100,8 +101,7 @@ class Effect
         this.createParticles();
 
         this.mouse = 
-        {
-            x: 0,
+        {   x: 0,
             y: 0,
             pressed: false,
             radius: 250,
@@ -174,7 +174,7 @@ class Effect
         this.width = width;
         this.height = height;
         context.fillStyle = gradient;
-        context.fillStroke = 'whitesmoke';
+        context.strokeStyle = 'whitesmoke';
         context.lineWidth = 2;
         this.particles.forEach(particle => {
             particle.reset();
