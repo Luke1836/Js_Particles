@@ -74,10 +74,9 @@ class Particles
     }
 
     //Resets the positions of the every particles when window resizing takes place
-    reset() 
-    {
-        this.x = this.radius + Math.random() * (this.effect.width - this.radius * 2);   
-        this.y = this.radius + Math.random() * (this.effect.height - this.radius * 2);
+    reset() {
+        this.x = this.radius + Math.random() * (this.effect.width - 2 * this.radius);
+        this.y = this.radius + Math.random() * (this.effect.height - 2 * this.radius);
     }
 }
 
