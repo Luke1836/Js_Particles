@@ -48,8 +48,8 @@ class Particles
             if(dist < this.effect.mouse.radius)
             {
                 const angle = Math.atan2(dy, dx);
-                this.pushX += Math.cos(angle) * dist / 25;
-                this.pushY += Math.sin(angle) * dist / 25;
+                this.pushX -= Math.cos(angle) * dist / 25;
+                this.pushY -= Math.sin(angle) * dist / 25;
             }
         }
         
