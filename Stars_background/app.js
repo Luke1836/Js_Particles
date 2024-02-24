@@ -8,20 +8,20 @@ ctx.lineWidth = 2;
 /*  ------------Adding Linear Gradients--------------  */
 
 const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-gradient.addColorStop(0, '#BFD8AF');
+gradient.addColorStop(0, '#43766C');
 gradient.addColorStop(0.5, 'cyan');
-gradient.addColorStop(1, '#910A67');
+gradient.addColorStop(1, '#D63484');
 
 class Particles
 {
     constructor(effect)
     {
         this.effect = effect;
-        this.radius = Math.random() * 10 + 3;
+        this.radius = Math.random() * 12 + 2;
         this.x = this.radius + Math.random() * (this.effect.width - 2 * this.radius);
         this.y = this.radius + Math.random() * (this.effect.height -2 * this.radius);
-        this.vx = Math.random() * 3 - 2;
-        this.vy = Math.random() * 3 - 2;
+        this.vx = Math.random() * 2 - 2;
+        this.vy = Math.random() * 2 - 2;
         this.pushX = 0;
         this.pushY = 0;
         this.friction = 0.90;
@@ -156,12 +156,14 @@ class Effect
                 const dist = Math.hypot(dy, dx);
                 if(dist < maxDistance)
                 {
+                    context.save();
                     const opacity = 1 - (dist/maxDistance);
                     context.globalAlpha = opacity;
                     context.beginPath();
                     context.moveTo(this.particles[i].x, this.particles[i].y);
                     context.lineTo(this.particles[j].x, this.particles[j].y);
                     context.stroke();
+                    context.restore();
                 }
             }
         }
