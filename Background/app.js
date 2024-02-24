@@ -21,6 +21,7 @@ window.addEventListener('resize', () => {
     ctx.fillStyle = gradient;
 
 */
+
 class Particles 
 {
     constructor(effect)
