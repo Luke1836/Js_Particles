@@ -2,7 +2,7 @@ const canvas = document.getElementById('canvas1');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
-ctx.strokeStyle = 'white';
+ctx.strokeStyle = 'transparent';
 ctx.lineWidth = 2;
 
 /*  ------------Adding Linear Gradients--------------  */
@@ -17,7 +17,7 @@ class Particles
     constructor(effect)
     {
         this.effect = effect;
-        this.radius = Math.random() * 10 + 2;
+        this.radius = Math.random() * 10 + 3;
         this.x = this.radius + Math.random() * (this.effect.width - 2 * this.radius);
         this.y = this.radius + Math.random() * (this.effect.height -2 * this.radius);
         this.vx = Math.random() * 3 - 2;
@@ -97,7 +97,7 @@ class Effect
         this.width = this.canvas.width;
         this.height = this.canvas.height;
         this.particles = [];
-        this.numberOfParticles = 300;
+        this.numberOfParticles = 350;
         this.createParticles();
 
         this.mouse = 
